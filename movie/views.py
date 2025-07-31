@@ -6,7 +6,7 @@ from django.http import HttpResponse
 def home(request):
     #return HttpResponse("<h1>Welcome to the Movie Reviews Home Page!</h1>")
     #return render(request, 'home.html')
-    return render(request, 'home.html', {'name': 'Laura Castrillón'})
+    return render(request, 'home.html', {'name': 'Laura Andrea Castrillón Fajardo'})
 
 def about(request):
     return HttpResponse("<h1>About Movie Reviews</h1><p>This is a platform to share and read movie reviews.</p>")
