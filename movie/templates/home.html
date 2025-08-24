@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
@@ -7,8 +10,8 @@
 </head>
 
 <center>
-    <h1> Welcome to Home Page {{searchTerm}} </h1>
-    <h2> This is the full Home Page</h2>
+    <h1> Welcome to Home Page</h1>
+    <h2> This is the full Home Page. You are searching: {{searchTerm}} </h2>
 </center>
 
 <div class="container">
@@ -26,6 +29,17 @@
     <p>Searching for {{searchTerm}}</p>
     <!--End Searching-->
 
+    <!--Sign Up-->
+    <h2>Join our mailing list:</h2>
+    <form action="{% url 'signup' %}">
+        <div class="mb-3">
+            <label for="email" class="form-label"> Enter your email: </label>
+            <input type="email" class="form-control" name="email" />
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+    </form>
+    <!-- End Sign Up -->
+
     <!-- Un card por cada película con sus correspondientes atributos -->
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for movie in movies %}
@@ -35,6 +49,8 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ movie.title }}</h5>
                     <p class="card-text">{{ movie.description }}</p>
+                    <p class="card-text">{{ movie.genre }}</p>
+                    <p class="card-text">{{ movie.year }}</p>
                     {% if movie.url %}
                     <a href="{{ movie.url }}" class="btn btn-primary">Movie Link</a>
                     {% endif %}
@@ -44,5 +60,9 @@
         {% endfor %}
     </div>
 
+
+
     <br />
 </div>
+
+{% endblock %}
