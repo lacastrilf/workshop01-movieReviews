@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Movie 
+from movie.management.commands.embedding_recomendation import get_best_movie
+
 
 import matplotlib.pyplot as plt
 import matplotlib
@@ -40,6 +42,18 @@ def about(request):
 def signup(request):
     email = request.GET.get('email')
     return render(request, 'signup.html', {'email': email})
+
+def recomendations(request):
+    return render(request, 'recomendations.html')
+
+def generateRecomendations(request):
+    prompt = (request.GET.get("prompt"))
+    movie = None
+
+    if prompt:  # solo llamo si el usuario escribió algo
+        movie = get_best_movie(prompt)
+
+    return render(request, "recomendations.html", {"prompt": prompt, "movie": movie})
 
 
 def _figure_to_base64():

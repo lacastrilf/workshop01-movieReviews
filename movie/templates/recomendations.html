@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
+        crossorigin="anonymous"></script>
+</head>
+
+<center>
+    <h1> Recomendaciones</h1>
+    <h2> Escribe el tipo de pelicula que buscas y encuentra la pelicula que más concuerde </h2>
+    {% if prompt %}
+    <h3> Pelicula relacionada a: {{ prompt }}</h3>
+    {% endif %}
+</center>
+
+<div class="container">
+
+    <form action="{% url 'recomendations' %}" method="get">
+
+        <div class="mb-3">
+            <label for="prompt" class="form-label">
+                Escribe la recomendación que deseas:
+            </label>
+            <input type="text" class="form-control" name="prompt" />
+        </div>
+        <button type="submit" class="btn btn-primary">Recomendar</button>
+    </form>
+
+    <br>
+
+    {% if prompt %}
+
+    <!-- Un card por cada película con sus correspondientes atributos -->
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="card h-100">
+                <div class="row g-0">
+                    <!-- Imagen a la izquierda -->
+                    <div class="col-md-4">
+                        <img src="{{ movie.images.url }}" class="img-fluid rounded-start h-100 w-100 object-fit-cover"
+                            alt="...">
+                    </div>
+                    <!-- Texto a la derecha -->
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ movie.title }}</h5>
+                            <p class="card-text">{{ movie.description }}</p>
+                            <p class="card-text">{{ movie.genre }}</p>
+                            <p class="card-text">{{ movie.year }}</p>
+                            {% if movie.url %}
+                            <a href="{{ movie.url }}" class="btn btn-primary">Movie Link</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    {% endif %}
+
+
+    <!-- Un card por cada película con sus correspondientes atributos -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for movie in movies %}
+        <div v-for="movie in movies" class="col">
+            <div class="card">
+                <img src="{{ movie.images.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text">{{ movie.description }}</p>
+                    <p class="card-text">{{ movie.genre }}</p>
+                    <p class="card-text">{{ movie.year }}</p>
+                    {% if movie.url %}
+                    <a href="{{ movie.url }}" class="btn btn-primary">Movie Link</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+    <br />
+</div>
+
+{% endblock %}
